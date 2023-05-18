@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import PokemonCollection from "./components/PokemonCollection.tsx";
+import PokemonCollection from "./components/PokemonCollection";
 import { Pokemon } from "./interface";
 
 interface Pokemons {
@@ -31,7 +31,7 @@ function App() {
   }, []);
 
   const nextPage = async () => {
-    let res = await axios.get(nextUrl);
+    const res = await axios.get(nextUrl);
 
     setNextUrl(res.data.next);
 
@@ -39,6 +39,7 @@ function App() {
       const poke = await axios.get(
         `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
       );
+
       setPokemons((p) => [...p, poke.data]);
     });
   };
@@ -46,12 +47,14 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        {/* <header className="pokemon-header"> Pokemon</header> */}
-        {/* <PokemonCollection pokemons={pokemons} /> */}
-        {/* <button onClick={nextPage}>Charger</button> */}
+        <header className="pokemon-header"> Pokemon</header>
+        <PokemonCollection pokemons={pokemons} />
+        <button onClick={nextPage}>Charger</button>
       </div>
     </div>
   );
 }
 
 export default App;
+
+// https://pokeapi.co/
